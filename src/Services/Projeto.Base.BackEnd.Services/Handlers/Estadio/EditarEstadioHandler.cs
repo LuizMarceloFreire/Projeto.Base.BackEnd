@@ -2,6 +2,7 @@
 using Projeto.Base.BackEnd.Application.Commands.Estadio;
 using Projeto.Base.BackEnd.Domain.Entidades.Estadios.Interfaces;
 using System;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 

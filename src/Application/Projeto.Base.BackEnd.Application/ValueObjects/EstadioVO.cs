@@ -5,7 +5,6 @@ namespace Projeto.Base.BackEnd.Application.ValueObjects
 {
     public class EstadioVO : BaseVO
     {
-        public int ClubeId { get; set; }
         public string Nome { get; set; }
         public string Pais { get; set; }
         public bool Ativo { get; set; }

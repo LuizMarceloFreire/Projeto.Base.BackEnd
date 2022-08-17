@@ -2,6 +2,8 @@
 using Projeto.Base.BackEnd.Application.Commands.Estadio;
 using Projeto.Base.BackEnd.Application.ValueObjects;
 using Projeto.Base.BackEnd.Domain.Entidades.Estadios.Interfaces;
+using System;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -17,18 +19,29 @@ namespace Projeto.Base.BackEnd.Services.Handlers.Estadio
 
         public async Task<EstadioVO> Handle(BuscarEstadioPorIdCommand request, CancellationToken cancellationToken)
         {
-            var estadio = await _repositorio.ObterPorIdAsync(request.EstadioId);
-
-            var retornoEstadioVo = new EstadioVO
+            try
             {
+                var estadio = _repositorio.BuscarAsync(x => x.DataExclusao == null && x.Id == request.EstadioId).Result.FirstOrDefault();
+
+                if (estadio == null)
+                    throw new Exception("Nenhum estádio escontrado.");
+
+                var retornoEstadioVo = new EstadioVO
+                {
                     Id = estadio.Id,
                     Nome = estadio.Nome,
                     Pais = estadio.Pais,
                     Ativo = estadio.Ativo,
                     DataInclusao = estadio.DataInclusao
-            };
+                };
 
-            return retornoEstadioVo;
+                return retornoEstadioVo;
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+            
         }
     }
 }

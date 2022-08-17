@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Projeto.Base.BackEnd.Api.Models.Estadio;
 using Projeto.Base.BackEnd.Application.Commands.Estadio;
 using System;
 using System.Threading.Tasks;
@@ -16,11 +17,11 @@ namespace Projeto.Base.BackEnd.Api.Controllers
         }
 
         [HttpPost, Route("cadastrar-estadio")]
-        public async Task<IActionResult> CadastrarEmpresa()
+        public async Task<IActionResult> CadastrarEmpresa([FromBody] CadastrarEstadioModel model)
         {
             try
             {
-                return Ok(await _mediator.Send(new CadastrarEstadioCommand("Morumbi", "Brasil", true)));
+                return Ok(await _mediator.Send(new CadastrarEstadioCommand(model.Nome, model.Pais, model.Ativo)));
             }
             catch (Exception e)
             {
@@ -29,12 +30,26 @@ namespace Projeto.Base.BackEnd.Api.Controllers
         }
 
         [HttpGet, Route("buscar-estadio-por-id/{id}")]
-        public async Task<IActionResult> BuscarClubePorId(int id)
+        public async Task<IActionResult> BuscarEstadioPorId(int id)
         {
             try
             {
                 var estadio = await _mediator.Send(new BuscarEstadioPorIdCommand(id));
                 return Ok(estadio);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+
+        [HttpGet, Route("buscar-estadios")]
+        public async Task<IActionResult> BuscarEstadios()
+        {
+            try
+            {
+                var estadios = await _mediator.Send(new ListarEstadioCommand());
+                return Ok(estadios);
             }
             catch (Exception e)
             {
@@ -55,12 +70,12 @@ namespace Projeto.Base.BackEnd.Api.Controllers
             }
         }
 
-        [HttpPut, Route("editar-estadio/{id}")]
-        public async Task<IActionResult> EditarClube(int id, string nome, string pais, bool ativo)
+        [HttpPut, Route("editar-estadio")]
+        public async Task<IActionResult> EditarClube([FromBody] EditarEstadioModel model)
         {
             try
             {
-                return Ok(await _mediator.Send(new EditarEstadioCommand(id, nome, pais, ativo)));
+                return Ok(await _mediator.Send(new EditarEstadioCommand(model.Id, model.Nome, model.Pais, model.Ativo)));
             }
             catch (Exception e)
             {
