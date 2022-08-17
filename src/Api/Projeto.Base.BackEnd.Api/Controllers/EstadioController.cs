@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Projeto.Base.BackEnd.Application.Commands.Estadio;
+using System;
 using System.Threading.Tasks;
 
 namespace Projeto.Base.BackEnd.Api.Controllers
@@ -21,7 +22,7 @@ namespace Projeto.Base.BackEnd.Api.Controllers
             {
                 return Ok(await _mediator.Send(new CadastrarEstadioCommand("Morumbi", "Brasil", true)));
             }
-            catch (System.Exception e)
+            catch (Exception e)
             {
                 return BadRequest(e.Message);
             }
@@ -35,20 +36,33 @@ namespace Projeto.Base.BackEnd.Api.Controllers
                 var estadio = await _mediator.Send(new BuscarEstadioPorIdCommand(id));
                 return Ok(estadio);
             }
-            catch (System.Exception e)
+            catch (Exception e)
             {
                 return BadRequest(e.Message);
             }
         }
 
-        [HttpDelete, Route("deletar-estadio-por-id/{id}")]
-        public async Task<IActionResult> DeletarClubePorId(int id)
+        [HttpDelete, Route("deletar-estadio/{id}")]
+        public async Task<IActionResult> DeletarClube(int id)
         {
             try
             {
                 return Ok(await _mediator.Send(new DeletarEstadioCommand(id)));
             }
-            catch (System.Exception e)
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+
+        [HttpPut, Route("editar-estadio/{id}")]
+        public async Task<IActionResult> EditarClube(int id, string nome, string pais, bool ativo)
+        {
+            try
+            {
+                return Ok(await _mediator.Send(new EditarEstadioCommand(id, nome, pais, ativo)));
+            }
+            catch (Exception e)
             {
                 return BadRequest(e.Message);
             }
