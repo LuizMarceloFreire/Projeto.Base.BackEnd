@@ -12,7 +12,5 @@ namespace Projeto.Base.BackEnd.Domain.Entidades.Base.Interfaces
         Task<IEnumerable<TEntity>> ListarAsync();
         Task<TEntity> ObterPorIdAsync(TId id);
         void Atualizar(TEntity obj);
-        void Remover(TEntity obj);
-        //Task Salvar();
     }
 }

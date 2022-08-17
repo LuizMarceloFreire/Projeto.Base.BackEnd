@@ -7,6 +7,5 @@ namespace Projeto.Base.BackEnd.Infra.Repositorio.Interfaces
     {
         Task AdicionarAsync(TEntity obj);
         void Atualizar(TEntity obj);
-        void Remover(TEntity obj);
     }
 }

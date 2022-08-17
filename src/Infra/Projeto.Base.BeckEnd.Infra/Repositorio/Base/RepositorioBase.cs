@@ -26,14 +26,10 @@ namespace Projeto.Base.BackEnd.Infra.Repositorio.Base
 
         public void Atualizar(TEntity obj) => _dbSet.Update(obj);
 
-        public void Remover(TEntity obj) => _dbSet.Remove(obj);
-
         public async Task<IEnumerable<TEntity>> BuscarAsync(Expression<Func<TEntity, bool>> predicate) => await _dbSet.Where(predicate).ToListAsync();
 
         public async Task<IEnumerable<TEntity>> ListarAsync() => await _dbSet.ToListAsync();
 
         public async Task<TEntity> ObterPorIdAsync(TId id) => await _dbSet.FindAsync(id);
-
-        //public async Task Salvar() => await _dbSet.SaveChanges();
     }
 }

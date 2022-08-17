@@ -41,5 +41,17 @@ namespace Projeto.Base.BackEnd.Api.Controllers
             }
         }
 
+        [HttpDelete, Route("deletar-estadio-por-id/{id}")]
+        public async Task<IActionResult> DeletarClubePorId(int id)
+        {
+            try
+            {
+                return Ok(await _mediator.Send(new DeletarEstadioCommand(id)));
+            }
+            catch (System.Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
     }
 }
