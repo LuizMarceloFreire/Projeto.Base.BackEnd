@@ -17,7 +17,7 @@ namespace Projeto.Base.BackEnd.Services.Handlers.Clube
 
         public async Task<ClubeVO> Handle(BuscarClubePorIdCommand request, CancellationToken cancellationToken)
         {
-            var clube = await _repositorio.ObterPorIdAsync(request.ClubeId);
+            var clube = await _repositorio.ObterPorIdComIncludeEstadioAsync(request.ClubeId);
 
             var retornoClubeVo = new ClubeVO
             {

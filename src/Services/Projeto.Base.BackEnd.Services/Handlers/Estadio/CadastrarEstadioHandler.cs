@@ -1,6 +1,5 @@
 ﻿using MediatR;
 using Projeto.Base.BackEnd.Application.Commands.Estadio;
-using Projeto.Base.BackEnd.Domain.Entidades.Clubes.Interfaces;
 using Projeto.Base.BackEnd.Domain.Entidades.Estadios.Interfaces;
 using System;
 using System.Threading;

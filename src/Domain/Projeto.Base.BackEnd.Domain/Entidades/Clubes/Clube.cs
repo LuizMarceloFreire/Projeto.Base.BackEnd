@@ -82,5 +82,10 @@ namespace Projeto.Base.BackEnd.Domain.Entidades.Clubes
         {
             DataExclusao = DateTime.Now;
         }
+
+        public void VincularEstadio(Estadio estadio)
+        {
+            Estadio = estadio;
+        }
     }
 }

@@ -1,7 +1,9 @@
 ﻿using MediatR;
 using Projeto.Base.BackEnd.Application.Commands.Clube;
 using Projeto.Base.BackEnd.Domain.Entidades.Clubes.Interfaces;
+using Projeto.Base.BackEnd.Domain.Entidades.Estadios.Interfaces;
 using System;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -9,11 +11,13 @@ namespace Projeto.Base.BackEnd.Services.Handlers.Clube
 {
     public class CadastrarClubeHandler : AsyncRequestHandler<CadastrarClubeCommand>
     {
-        private readonly IClubeRepositorio _repositorio;
+        private readonly IClubeRepositorio _clubeRepositorio;
+        private readonly IEstadioRepositorio _estadioRepositorio;
 
-        public CadastrarClubeHandler(IClubeRepositorio repositorio)
+        public CadastrarClubeHandler(IClubeRepositorio clubeRepositorio, IEstadioRepositorio estadioRepositorio)
         {
-            _repositorio = repositorio;
+            _clubeRepositorio = clubeRepositorio;
+            _estadioRepositorio = estadioRepositorio;
         }
 
         protected async override Task Handle(CadastrarClubeCommand request, CancellationToken cancellationToken)
@@ -21,7 +25,15 @@ namespace Projeto.Base.BackEnd.Services.Handlers.Clube
             try
             {
                 var clube = new Domain.Entidades.Clubes.Clube(request.Nome, request.AnoFundacao, request.UrlRedeSocial, request.Ativo);
-                await _repositorio.AdicionarAsync(clube);
+
+                var estadio = await _estadioRepositorio.ObterPorIdAsync(request.EstadioId);
+
+                if (estadio == null)
+                    throw new Exception("Estádio não encontrado");
+
+                clube.VincularEstadio(estadio);
+
+                await _clubeRepositorio.AdicionarAsync(clube);
             }
             catch (Exception e)
             {
