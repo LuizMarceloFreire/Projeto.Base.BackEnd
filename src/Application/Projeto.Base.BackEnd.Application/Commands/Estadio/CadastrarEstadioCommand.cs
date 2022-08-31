@@ -5,11 +5,11 @@ namespace Projeto.Base.BackEnd.Application.Commands.Estadio
 {
     public class CadastrarEstadioCommand : IRequest
     {
-        public CadastrarEstadioCommand(string nome, string pais, bool ativo)
+        public CadastrarEstadioCommand(string nome, string pais)
         {
             Nome = nome;
             Pais = pais;
-            Ativo = ativo;
+            Ativo = true;
             DataInclusao = DateTime.Now;
         }
 

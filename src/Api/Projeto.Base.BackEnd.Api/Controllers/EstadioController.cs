@@ -21,7 +21,10 @@ namespace Projeto.Base.BackEnd.Api.Controllers
         {
             try
             {
-                return Ok(await _mediator.Send(new CadastrarEstadioCommand(model.Nome, model.Pais, model.Ativo)));
+                if (model == null)
+                    return BadRequest();
+
+                return Ok(await _mediator.Send(new CadastrarEstadioCommand(model.Nome, model.Pais)));
             }
             catch (Exception e)
             {
@@ -58,7 +61,7 @@ namespace Projeto.Base.BackEnd.Api.Controllers
         }
 
         [HttpDelete, Route("deletar-estadio/{id}")]
-        public async Task<IActionResult> DeletarClube(int id)
+        public async Task<IActionResult> DeletarEstadio(int id)
         {
             try
             {
@@ -75,6 +78,9 @@ namespace Projeto.Base.BackEnd.Api.Controllers
         {
             try
             {
+                if(model == null)
+                   return BadRequest();
+
                 return Ok(await _mediator.Send(new EditarEstadioCommand(model.Id, model.Nome, model.Pais, model.Ativo)));
             }
             catch (Exception e)

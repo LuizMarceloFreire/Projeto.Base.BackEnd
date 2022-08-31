@@ -9,8 +9,5 @@ namespace Projeto.Base.BackEnd.Api.Models.Estadio
 
         [Required]
         public string Pais { get; set; }
-
-        [Required]
-        public bool Ativo { get; set; }
     }
 }
