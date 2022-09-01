@@ -45,5 +45,19 @@ namespace Projeto.Base.BackEnd.Api.Controllers
                 return BadRequest(e.Message);
             }
         }
+
+        [HttpGet, Route("buscar-clubes")]
+        public async Task<IActionResult> BuscarEstadios()
+        {
+            try
+            {
+                var clubes = await _mediator.Send(new ListarClubeCommand());
+                return Ok(clubes);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
     }
 }

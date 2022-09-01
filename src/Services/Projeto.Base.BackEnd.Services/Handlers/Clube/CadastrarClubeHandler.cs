@@ -29,7 +29,7 @@ namespace Projeto.Base.BackEnd.Services.Handlers.Clube
                 var estadio = await _estadioRepositorio.ObterPorIdAsync(request.EstadioId);
 
                 if (estadio == null)
-                    throw new Exception("Estádio não encontrado");
+                    throw new Exception("Estádio não encontrado.");
 
                 clube.VincularEstadio(estadio);
 
