@@ -26,13 +26,16 @@ namespace Projeto.Base.BackEnd.Services.Handlers.Clube
                 AnoFundacao = clube.AnoFundacao,
                 Ativo = clube.Ativo,
                 DataInclusao = clube.DataInclusao,
+                DataAlteracao = clube.DataAlteracao,
+                UrlRedeSocial = clube.UrlRedeSocial,
                 Estadio = new EstadioVO
                 {
                    Id = clube.Estadio.Id,
                    Nome = clube.Estadio.Nome,
                    Pais = clube.Estadio.Pais,
                    Ativo = clube.Estadio.Ativo,
-                   DataInclusao = clube.Estadio.DataInclusao
+                   DataInclusao = clube.Estadio.DataInclusao,
+                   DataAlteracao = clube.Estadio.DataAlteracao
                 }
             };
 
