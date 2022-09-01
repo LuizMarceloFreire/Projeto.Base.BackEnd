@@ -6,7 +6,7 @@ namespace Projeto.Base.BackEnd.Application.Commands.Clube
 {
     public class EditarClubeCommand : IRequest
     {
-        public EditarClubeCommand(int clubeId, string nome, int anoFundacao, string urlRedeSocial, bool ativo, EstadioVO estadio)
+        public EditarClubeCommand(int clubeId, string nome, int anoFundacao, string urlRedeSocial, bool ativo)
         {
             ClubeId = clubeId;
             Nome = nome;
@@ -14,7 +14,6 @@ namespace Projeto.Base.BackEnd.Application.Commands.Clube
             UrlRedeSocial = urlRedeSocial;
             Ativo = ativo;
             DataAlteracao = DateTime.Now;
-            Estadio = estadio;
         }
 
         public int ClubeId { get; set; }
@@ -23,6 +22,5 @@ namespace Projeto.Base.BackEnd.Application.Commands.Clube
         public string UrlRedeSocial { get; set; }
         public bool Ativo { get; set; }
         public DateTime? DataAlteracao { get; set; }
-        public EstadioVO Estadio { get; set; }
     }
 }

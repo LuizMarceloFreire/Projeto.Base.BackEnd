@@ -59,5 +59,35 @@ namespace Projeto.Base.BackEnd.Api.Controllers
                 return BadRequest(e.Message);
             }
         }
+
+        [HttpDelete, Route("deletar-clube/{id}")]
+        public async Task<IActionResult> DeletarEstadio(int id)
+        {
+            try
+            {
+                return Ok(await _mediator.Send(new DeletarClubeCommand(id)));
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+
+
+        [HttpPut, Route("editar-clube")]
+        public async Task<IActionResult> EditarClube([FromBody] EditarClubeModel model)
+        {
+            try
+            {
+                if (model == null)
+                    return BadRequest();
+
+                return Ok(await _mediator.Send(new EditarClubeCommand(model.Id, model.Nome, model.AnoFundacao, model.UrlRedeSocial, model.Ativo)));
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
     }
 }
