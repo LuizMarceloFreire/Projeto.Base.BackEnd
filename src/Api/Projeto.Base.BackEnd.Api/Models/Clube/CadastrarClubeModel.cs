@@ -1,5 +1,4 @@
-﻿using Projeto.Base.BackEnd.Application.ValueObjects;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace Projeto.Base.BackEnd.Api.Models.Clube
 {
@@ -15,8 +14,5 @@ namespace Projeto.Base.BackEnd.Api.Models.Clube
 
         [Required]
         public string UrlRedeSocial { get; set; }
-
-        [Required]
-        public bool Ativo { get; set; }
     }
 }
