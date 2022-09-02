@@ -1,8 +1,11 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using Projeto.Base.BackEnd.Api.Models.Estadio;
 using Projeto.Base.BackEnd.Application.Commands.Estadio;
+using RabbitMQ.Client;
 using System;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace Projeto.Base.BackEnd.Api.Controllers
@@ -10,10 +13,16 @@ namespace Projeto.Base.BackEnd.Api.Controllers
     public class EstadioController : MainController
     {
         private readonly IMediator _mediator;
+        private readonly ConnectionFactory _factory;
+        private const string queueName = "messages";
 
         public EstadioController(IMediator mediator)
         {
             _mediator = mediator;
+            _factory = new ConnectionFactory
+            {
+                HostName = "localhost",
+            };
         }
 
         [HttpPost, Route("cadastrar-estadio")]
@@ -24,7 +33,32 @@ namespace Projeto.Base.BackEnd.Api.Controllers
                 if (model == null)
                     return BadRequest();
 
-                return Ok(await _mediator.Send(new CadastrarEstadioCommand(model.Nome, model.Pais)));
+                using (var connection = _factory.CreateConnection())
+                {
+                    using (var channel = connection.CreateModel())
+                    {
+                        channel.QueueDeclare
+                            (
+                                queue: queueName,
+                                durable: false,
+                                exclusive: false,
+                                autoDelete: false,
+                                arguments: null
+                            );
+
+                        var stringFieldMessage = JsonConvert.SerializeObject(model);
+                        var bytesMessage = Encoding.UTF8.GetBytes(stringFieldMessage);
+
+                        channel.BasicPublish(
+                                exchange: "",
+                                routingKey: queueName,
+                                basicProperties: null,
+                                body: bytesMessage
+                            );
+                    }
+
+                    return Accepted(await _mediator.Send(new CadastrarEstadioCommand(model.Nome, model.Pais)));
+                }
             }
             catch (Exception e)
             {
@@ -78,8 +112,8 @@ namespace Projeto.Base.BackEnd.Api.Controllers
         {
             try
             {
-                if(model == null)
-                   return BadRequest();
+                if (model == null)
+                    return BadRequest();
 
                 return Ok(await _mediator.Send(new EditarEstadioCommand(model.Id, model.Nome, model.Pais, model.Ativo)));
             }
