@@ -33,6 +33,9 @@ namespace Projeto.Base.BackEnd.Services.Handlers.Clube
 
                 clube.VincularEstadio(estadio);
 
+                if (!clube.Validar())
+                    throw new Exception("Erro ao salvar!");
+
                 await _clubeRepositorio.AdicionarAsync(clube);
             }
             catch (Exception e)

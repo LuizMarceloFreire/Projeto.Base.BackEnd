@@ -31,6 +31,9 @@ namespace Projeto.Base.BackEnd.Services.Handlers.Clube
                 clube.AlterarDataAlteracao(request.DataAlteracao);
                 clube.AlterarSituacao(request.Ativo);
 
+                if (!clube.Validar())
+                    throw new Exception("Erro ao salvar!");
+
                 _repositorio.Atualizar(clube);
             }
             catch (Exception e)

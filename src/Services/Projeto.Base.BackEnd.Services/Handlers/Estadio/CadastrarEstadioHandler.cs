@@ -21,6 +21,10 @@ namespace Projeto.Base.BackEnd.Services.Handlers.Estadio
             try
             {
                 var estadio = new Domain.Entidades.Estadios.Estadio(request.Nome, request.Pais, request.Ativo);
+
+                if (!estadio.Validar())
+                    throw new Exception("Erro ao salvar!");
+
                 await _repositorio.AdicionarAsync(estadio);                
             }
             catch (Exception e)

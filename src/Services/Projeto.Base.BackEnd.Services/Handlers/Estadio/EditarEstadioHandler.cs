@@ -29,6 +29,9 @@ namespace Projeto.Base.BackEnd.Services.Handlers.Estadio
                 estadio.AlterarDataAlteracao(request.DataAlteracao);
                 estadio.AlterarSituacao(request.Ativo);
 
+                if (!estadio.Validar())
+                    throw new Exception("Erro ao salvar!");
+
                 _repositorio.Atualizar(estadio);
             }
             catch (Exception e)
